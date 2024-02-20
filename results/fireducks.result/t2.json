@@ -1,0 +1,22 @@
+{
+    "id": "95a2cbbf-9b9f-422c-a37a-eb91c1444216",
+    "lib_name": "fireducks (0.10.0)",
+    "bench_time": "2024-02-20 18:45:34",
+    "dataset_name": "t2.csv",
+    "dataset_path": "/root/bench/t2.csv",
+    "_dataframe_class": "<class 'fireducks.pandas.frame.DataFrame'>",
+    "time": {
+        "read_csv": 0.0008027553558349609,
+        "dropna": 0.18097996711730957,
+        "group_transform": 1.9538078308105469,
+        "stack": 0.5736172199249268,
+        "melt": 0.0007703304290771484,
+        "filter_bracket": 0.0008127689361572266,
+        "filter_query": 0.0012848377227783203,
+        "replace": 0.0002067089080810547,
+        "sort": 0.0002205371856689453
+    },
+    "dataset_size": 558632916,
+    "ram_fin": 1081438044,
+    "ram_peak": 1319671747
+}

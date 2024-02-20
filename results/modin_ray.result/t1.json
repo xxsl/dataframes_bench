@@ -1,0 +1,22 @@
+{
+    "id": "c6b0ae29-ffc9-48ff-8777-355bcc1af2ec",
+    "lib_name": "modin_ray (0.27.0)",
+    "bench_time": "2024-02-20 19:27:46",
+    "dataset_name": "t1.csv",
+    "dataset_path": "/root/bench/t1.csv",
+    "_dataframe_class": "<class 'modin.pandas.dataframe.DataFrame'>",
+    "time": {
+        "read_csv": 10.202502489089966,
+        "dropna": 0.1535201072692871,
+        "group_transform": 0.25097060203552246,
+        "stack": 0.18840909004211426,
+        "melt": 0.9313971996307373,
+        "filter_bracket": 0.3169674873352051,
+        "filter_query": 0.03076958656311035,
+        "replace": 0.05832648277282715,
+        "sort": 0.2501711845397949
+    },
+    "dataset_size": 111722152,
+    "ram_fin": 81876857,
+    "ram_peak": 117724643
+}

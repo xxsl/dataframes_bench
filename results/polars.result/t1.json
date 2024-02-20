@@ -1,0 +1,22 @@
+{
+    "id": "bda50d8d-d953-4dc9-a32f-4f36de9e9b61",
+    "lib_name": "polars (0.20.9)",
+    "bench_time": "2024-02-20 19:18:06",
+    "dataset_name": "t1.csv",
+    "dataset_path": "/root/bench/t1.csv",
+    "_dataframe_class": "<class 'polars.dataframe.frame.DataFrame'>",
+    "time": {
+        "read_csv": 3.7133920192718506,
+        "dropna": 0.29683971405029297,
+        "group_transform": 0.5197975635528564,
+        "stack": 0.42801952362060547,
+        "melt": 0.028867721557617188,
+        "filter_bracket": 0.3516414165496826,
+        "filter_query": 0.3375403881072998,
+        "replace": 0.05134272575378418,
+        "sort": 0.07900619506835938
+    },
+    "dataset_size": 111722152,
+    "ram_fin": 45108583,
+    "ram_peak": 218037595
+}

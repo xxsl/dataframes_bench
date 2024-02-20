@@ -1,0 +1,22 @@
+{
+    "id": "bcb5f81b-2516-4a27-aeef-9f2675ecb697",
+    "lib_name": "modin_dask (0.27.0)",
+    "bench_time": "2024-02-20 19:26:40",
+    "dataset_name": "t3.csv",
+    "dataset_path": "/root/bench/t3.csv",
+    "_dataframe_class": "<class 'modin.pandas.dataframe.DataFrame'>",
+    "time": {
+        "read_csv": 27.612987279891968,
+        "dropna": 0.47780847549438477,
+        "group_transform": -1,
+        "stack": -1,
+        "melt": -1,
+        "filter_bracket": 0.579052209854126,
+        "filter_query": 0.10332751274108887,
+        "replace": 0.09440279006958008,
+        "sort": -1
+    },
+    "dataset_size": 1117243993,
+    "ram_fin": 164051079,
+    "ram_peak": 206415015
+}

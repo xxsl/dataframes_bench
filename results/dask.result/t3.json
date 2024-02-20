@@ -1,0 +1,22 @@
+{
+    "id": "988f3339-77f6-486b-82a1-20e2c7011441",
+    "lib_name": "dask (2024.2.0)",
+    "bench_time": "2024-02-20 19:45:50",
+    "dataset_name": "t3.csv",
+    "dataset_path": "/root/bench/t3.csv",
+    "_dataframe_class": "<class 'dask.dataframe.core.DataFrame'>",
+    "time": {
+        "read_csv": 0.018881797790527344,
+        "dropna": 23.00294017791748,
+        "group_transform": 23.075425624847412,
+        "stack": -1,
+        "melt": 22.8759024143219,
+        "filter_bracket": 23.044771432876587,
+        "filter_query": 22.99368667602539,
+        "replace": 23.107863664627075,
+        "sort": 67.82746624946594
+    },
+    "dataset_size": 1117243993,
+    "ram_fin": 115076700,
+    "ram_peak": 6656881397
+}

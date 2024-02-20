@@ -1,0 +1,22 @@
+{
+    "id": "5b9c7fd3-ce24-4b78-af06-f2a912c23696",
+    "lib_name": "pandas (2.2.0)",
+    "bench_time": "2024-02-20 18:50:05",
+    "dataset_name": "t3.csv",
+    "dataset_path": "/root/bench/t3.csv",
+    "_dataframe_class": "<class 'pandas.core.frame.DataFrame'>",
+    "time": {
+        "read_csv": 19.924599647521973,
+        "dropna": 1.4247143268585205,
+        "group_transform": 0.6786487102508545,
+        "stack": 0.9099416732788086,
+        "melt": 2.5779619216918945,
+        "filter_bracket": 0.048696041107177734,
+        "filter_query": 0.07307934761047363,
+        "replace": 1.1934168338775635,
+        "sort": 2.2619338035583496
+    },
+    "dataset_size": 1117243993,
+    "ram_fin": 3683265361,
+    "ram_peak": 6397576258
+}
