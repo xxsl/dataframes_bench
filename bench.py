@@ -15,7 +15,7 @@ def invoke_group_transform(df):
     # polars not support this so maybe we should treat it as fallback to pandas in this way ;)
     if df_is_polars(_df):
         _df = _df.to_pandas()
-    return _df.groupby("object_type")["prop_attack"].transform(lambda att: att.mean() / att.std())
+    return _df.groupby("object_type")["prop_mp"].transform(lambda att: att.mean() / att.std())
 
 def invoke_stack(df):
     _df = df
@@ -59,6 +59,7 @@ def invoke_sort(df):
 
 # fireducks.pandas.frame.DataFrame
 # polars.dataframe.frame.DataFrame
+# dask.dataframe.core.DataFrame
 
 def test_df(item, df):
     if item not in TEST_ITEMS:
@@ -76,6 +77,8 @@ def df_is_polars(obj):
 def immediate_exec(df):
     if _type_cmp(df, "fireducks.pandas.frame.DataFrame"):
         df._evaluate()
+    elif _type_cmp(df, "dask.dataframe.core.DataFrame"):
+        df.compute()
 
 def init_df_lib(tool_type = 'pandas'):
     p = None
