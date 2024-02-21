@@ -39,18 +39,14 @@ def invoke_melt(df):
         return sub_df.melt(id_vars=['object_id', 'object_type', 'loc_x', 'loc_y'], var_name='rank_type', value_name='rank_value')
 
 def invoke_filter_bracket(df):
-    _df = df
-    # polars not support this so maybe we should treat it as fallback to pandas in this way ;)
-    if df_is_polars(_df):
-        if POLARS_FALLBACK_TO_PANDAS:
-            _df = _df.to_pandas()
-        else:
-            return None
-    return _df[(_df["loc_x"] > 1000) & (_df["loc_x"] <= 2000) & (_df["loc_y"] > 2000) & (_df["loc_y"] <= 3000)]
+    if df_is_polars(df):
+        return df.filter((df['loc_x'] > 1000) & (df['loc_x'] <= 2000) & (df['loc_y'] > 2000) & (df['loc_y'] <= 3000))
+    else:
+        return df[(df["loc_x"] > 1000) & (df["loc_x"] <= 2000) & (df["loc_y"] > 2000) & (df["loc_y"] <= 3000)]
 
 def invoke_filter_query(df):
     _df = df
-    # polars not support this so maybe we should treat it as fallback to pandas in this way ;)
+    # I can't find a similar way in polars compared to this, so we fallback to pandas if necessary
     if df_is_polars(_df):
         if POLARS_FALLBACK_TO_PANDAS:
             _df = _df.to_pandas()
