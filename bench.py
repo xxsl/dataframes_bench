@@ -9,19 +9,26 @@ import sys
 ### Test method items
 
 TEST_ITEMS = ['group_transform', 'stack', 'melt', 'filter_bracket', 'filter_query', 'replace', 'sort']
+POLARS_FALLBACK_TO_PANDAS = False
 
 def invoke_group_transform(df):
     _df = df
     # polars not support this so maybe we should treat it as fallback to pandas in this way ;)
     if df_is_polars(_df):
-        _df = _df.to_pandas()
-    return _df.groupby("object_type")["prop_mp"].transform(lambda att: att.mean() / att.std())
+        if POLARS_FALLBACK_TO_PANDAS:
+            _df = _df.to_pandas()
+        else:
+            return None
+    return _df.groupby("object_type")["prop_mp"].transform(lambda mp: mp.mean() / mp.std())
 
 def invoke_stack(df):
     _df = df
     # polars not support this so maybe we should treat it as fallback to pandas in this way ;)
     if df_is_polars(_df):
-        _df = _df.to_pandas()
+        if POLARS_FALLBACK_TO_PANDAS:
+            _df = _df.to_pandas()
+        else:
+            return None
     return _df[['obj_rank', 'rareness_rank']].stack()
 
 def invoke_melt(df):
@@ -33,16 +40,22 @@ def invoke_melt(df):
 
 def invoke_filter_bracket(df):
     _df = df
-    # fallback to pandas as we test from the point of view from pandas user
+    # polars not support this so maybe we should treat it as fallback to pandas in this way ;)
     if df_is_polars(_df):
-        _df = _df.to_pandas()
+        if POLARS_FALLBACK_TO_PANDAS:
+            _df = _df.to_pandas()
+        else:
+            return None
     return _df[(_df["loc_x"] > 1000) & (_df["loc_x"] <= 2000) & (_df["loc_y"] > 2000) & (_df["loc_y"] <= 3000)]
 
 def invoke_filter_query(df):
     _df = df
-    # fallback to pandas as we test from the point of view from pandas user
+    # polars not support this so maybe we should treat it as fallback to pandas in this way ;)
     if df_is_polars(_df):
-        _df = _df.to_pandas()
+        if POLARS_FALLBACK_TO_PANDAS:
+            _df = _df.to_pandas()
+        else:
+            return None
     return _df.query("loc_x > 1000 and loc_x <= 2000 and loc_y > 2000 and loc_y <= 3000")
 
 def invoke_replace(df):
@@ -61,24 +74,26 @@ def invoke_sort(df):
 # polars.dataframe.frame.DataFrame
 # dask.dataframe.core.DataFrame
 
+def immediate_exec(df):
+    if _type_cmp(df, "fireducks.pandas.frame.DataFrame"):
+        df._evaluate()
+    elif _type_cmp(df, "dask.dataframe.core.DataFrame"):
+        df.compute()
+
 def test_df(item, df):
     if item not in TEST_ITEMS:
         raise Exception("unknown test item: " + item)
 
     _func = globals()["invoke_" + item]
-    return _func(df)
+    _ret = _func(df)
+    immediate_exec(_ret)
+    return _ret
 
 def _type_cmp(obj, cmp_type):
     return cmp_type in str(type(obj))
 
 def df_is_polars(obj):
     return _type_cmp(obj, "polars.dataframe.frame.DataFrame")
-
-def immediate_exec(df):
-    if _type_cmp(df, "fireducks.pandas.frame.DataFrame"):
-        df._evaluate()
-    elif _type_cmp(df, "dask.dataframe.core.DataFrame"):
-        df.compute()
 
 def init_df_lib(tool_type = 'pandas'):
     p = None
@@ -178,14 +193,13 @@ def bench(target_lib, target_dataset):
         _t1 = time.time()
         success = True
         try:
-            test_df(test_item, df)
+            _r = test_df(test_item, df)
         except:
             success = False
             pass
-        immediate_exec(df)
         _t2 = time.time()
 
-        if success:
+        if success and (_r is not None):
             bench_info["time"][test_item] = _t2 - _t1
         else:
             bench_info["time"][test_item] = -1
